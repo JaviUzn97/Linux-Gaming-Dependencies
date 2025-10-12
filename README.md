@@ -3,13 +3,13 @@ Script for installing essential game dependencies on Debian/Ubuntu. Includes mul
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Optimizing Your Gaming Experience on Linux 🎮
+#Optimizing Your Gaming Experience on Linux 🎮
 
 The shell script presented here is an essential tool for any gaming enthusiast using Debian- or Ubuntu-based Linux distributions. Its main purpose is to ensure that the operating system has all the necessary libraries, drivers, and codecs to run a wide variety of games, especially those that require support for 32-bit (i386) architectures and the latest graphics technologies.
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Architecture Compatibility and Key Dependencies
+#Architecture Compatibility and Key Dependencies
 
 The first crucial step in the script is enabling the 32-bit architecture using sudo dpkg --add-architecture i386 and updating the package indexes with sudo apt update. This step is critical because many games, even modern ones, or compatibility layers like Wine or Proton (used on Steam), depend on 32-bit libraries to run properly.
 
@@ -25,7 +25,7 @@ libsqlite3-0:i386: Often used for internal application data management.
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Graphics Power: Vulkan and Drivers
+#Graphics Power: Vulkan and Drivers
 
 The GLVK variable (short for GLaphics and VulKan) is the backbone of modern graphics performance. Vulkan is a low-overhead graphics API that allows developers more direct control over the GPU, resulting in improved performance and greater stability. This set of packages ensures that the system is ready to take advantage of this technology:
 
@@ -39,7 +39,7 @@ Diagnostics: vulkan-tools and vainfo are crucial diagnostic tools for verifying 
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
-Multimedia Compatibility: Codecs
+#Multimedia Compatibility: Codecs
 
 Finally, the CODECS variable addresses multimedia compatibility. Games often contain video sequences (cutscenes) and sound files that require specific codecs to play. The script installs the GStreamer stack, a multimedia framework, with all its plugins (good, bad, and ugly) and support for FFmpeg (gstreamer1.0-libav), ensuring near-universal compatibility with video and audio formats.
 
