@@ -43,4 +43,6 @@ Multimedia Compatibility: Codecs
 
 Finally, the CODECS variable addresses multimedia compatibility. Games often contain video sequences (cutscenes) and sound files that require specific codecs to play. The script installs the GStreamer stack, a multimedia framework, with all its plugins (good, bad, and ugly) and support for FFmpeg (gstreamer1.0-libav), ensuring near-universal compatibility with video and audio formats.
 
+------------------------------------------------------------------------------------------------------------------------------------
+
 The final line, sudo apt install --install-recommends $GLVK $DEPENDENCIES $CODECS -, runs the installation of all these packages with the --install-recommends option to obtain suggested dependencies that are often necessary for full functionality, making this script a comprehensive solution for transforming a standard Debian/Ubuntu installation into a robust and functional gaming platform.
