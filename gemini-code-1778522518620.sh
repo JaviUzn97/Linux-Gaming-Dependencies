@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Detectar la distribución
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    DISTRO=$ID
+else
+    echo "No se pudo detectar la distribución."
+    exit 1
+fi
+
+case $DISTRO in
+    debian|ubuntu|kubuntu)
+        echo "Configurando dependencias para Debian/Ubuntu..."
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        # Drivers, Codecs y Dependencias 
+        GLVK="libvulkan1 libvulkan1:i386 libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 libgl1 libgl1:i386 intel-media-va-driver intel-media-va-driver:i386 mesa-utils mesa-va-drivers mesa-vdpau-drivers vainfo vulkan-tools"
+        CODECS="gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav"
+        DEPS="libasound2-plugins:i386 libsdl2-2.0-0:i386 libdbus-1-3:i386 libsqlite3-0:i386 git"
+        sudo apt install --install-recommends $GLVK $CODECS $DEPS -y
+        ;;
+
+    arch)
+        echo "Configurando dependencias para Arch Linux..."
+        # Requiere tener habilitado [multilib] en /etc/pacman.conf
+        sudo pacman -Syu --needed git vulkan-mesa-layers lib32-vulkan-mesa-layers vulkan-icd-loader lib32-vulkan-icd-loader lib32-mesa vulkan-tools lib32-libutils gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav
+        ;;
+
+    fedora)
+        echo "Configurando dependencias para Fedora..."
+        sudo dnf install -y git vulkan-loader vulkan-loader.i686 mesa-va-drivers mesa-va-drivers.i686 mesa-vulkan-drivers mesa-vulkan-drivers.i686 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad-free gstreamer1.0-plugins-ugly-free
+        ;;
+
+    opensuse*)
+        echo "Configurando dependencias para openSUSE..."
+        sudo zypper install -y git vulkan-loader vulkan-loader-32bit libvulkan_intel libvulkan_intel-32bit libvulkan_radeon libvulkan_radeon-32bit gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly
+        ;;
+
+    solus)
+        echo "Configurando dependencias para Solus..."
+        sudo eopkg it -y git vulkan vulkan-32bit mesa-driver-common-32bit gstreamer1-plugins-good gstreamer1-plugins-bad gstreamer1-plugins-ugly gstreamer1-libav
+        ;;
+
+    *)
+        echo "Distribución $DISTRO no soportada directamente por este script."
+        exit 1
+        ;;
+esac
+
+# Instalación de Fuentes (Común para todas las distros) 
+echo "Instalando fuentes de Microsoft..."
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+if [ ! -d "Microsoft-365-Fonts" ]; then
+    git clone https://github.com/pjobson/Microsoft-365-Fonts.git
+else
+    cd Microsoft-365-Fonts && git pull && cd ..
+fi
+fc-cache -f -v
+
+echo "Proceso finalizado."
