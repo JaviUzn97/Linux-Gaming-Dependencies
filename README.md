@@ -28,7 +28,7 @@ A lightweight bash script to automate the installation of essential drivers, cod
 
 1. **Clone the repository or download the script:**
 ```bash
-git clone https://github.com/your-username/your-repo-name.git](https://github.com/JaviUzn97/Linux-Gaming-Dependencies.git
+git clone https://github.com/JaviUzn97/Linux-Gaming-Dependencies.git
 cd Linux-Gaming-Dependencies
 
 ```
